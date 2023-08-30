@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 app.get("/python-print", (req, res) => {
   try {
 	var spawn = require("child_process").spawn;
-	var pyProcess = spawn("python3", ["./printMessage.py"]);
+	var pyProcess = spawn("python", ["./printMessage.py"]);
 
 	pyProcess.stdout.on("data", (data) => {
 		const dataStr = data.toString();
@@ -59,7 +59,7 @@ app.get("/python", (req, res) => {
 app.get("/python-numpy", (req, res) => {
   try {
 	var spawn = require("child_process").spawn;
-	var pyProcess = spawn("python3", ["./printNumpy.py"]);
+	var pyProcess = spawn("python", ["./printNumpy.py"]);
 
 	pyProcess.stdout.on("data", (data) => {
 		const dataStr = data.toString();
