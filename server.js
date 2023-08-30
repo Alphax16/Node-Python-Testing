@@ -19,6 +19,7 @@ app.get('/python', (req,res)=>{
 
 
     process.stdout.on('data', function(data) {
+        console.log(data.toString());
         res.send(data.toString());
     } )
 })
