@@ -11,6 +11,7 @@ const runPythonScript = (scriptPath, callback) => {
 
     let activationCommand = "";
     try {
+        console.log('Platform:', process.platform);
         activationCommand = process.platform === 'win32' ? `.\\${virtualEnvPath}\\Scripts\\activate &&` : `source ./${virtualEnvPath}/bin/activate &&`;
     } catch (e) {
         console.log(e);
