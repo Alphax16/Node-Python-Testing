@@ -6,25 +6,23 @@ const port = process.env.PORT || 5000;
 
 app.use(express.json());
 
-const runPythonScript = (scriptPath, callback) => {
+function runPythonScript(scriptPath, callback) {
     const virtualEnvPath = 'TEST_ENV';
 
-    let activationCommand = "";
+    // const activationScript = process.platform === 'win32' ? `${virtualEnvPath}\\Scripts\\activate` : `source ${virtualEnvPath}/bin/activate`;
+    let activationScript = "";
     try {
         console.log('Platform:', process.platform);
-        activationCommand = process.platform === 'win32' ? `.\\${virtualEnvPath}\\Scripts\\activate &&` : `source ./${virtualEnvPath}/bin/activate &&`;
+        activationScript = process.platform === 'win32' ? `.\\${virtualEnvPath}\\Scripts\\activate &&` : `source ./${virtualEnvPath}/bin/activate &&`;
     } catch (e) {
         console.log(e);
-        activationCommand = `source ./${virtualEnvPath}/bin/activate &&`;
+        activationScript = `source ./${virtualEnvPath}/bin/activate &&`;
     }
 
     const pythonScriptCommand = `python ${scriptPath}`;
+    const fullCommand = `${activationScript} && ${pythonScriptCommand}`;
 
-    const fullCommand = `${activationCommand} ${pythonScriptCommand}`;
-
-	console.log('FULL COMMAND:', fullCommand);
-
-    const pyProcess = spawn(fullCommand, { shell: true });
+    const pyProcess = spawn('bash', ['-c', fullCommand]);
 
     let output = '';
     let error = '';
