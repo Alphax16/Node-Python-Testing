@@ -8,7 +8,14 @@ app.use(express.json());
 
 const runPythonScript = (scriptPath, callback) => {
     const virtualEnvPath = 'TEST_ENV';
-    const activationCommand = process.platform === 'win32' ? `.\\${virtualEnvPath}\\Scripts\\activate &&` : `source ./${virtualEnvPath}/bin/activate &&`;
+
+    let activationCommand = "";
+    try {
+        activationCommand = process.platform === 'win32' ? `.\\${virtualEnvPath}\\Scripts\\activate &&` : `source ./${virtualEnvPath}/bin/activate &&`;
+    } catch (e) {
+        console.log(e);
+        activationCommand = `source ./${virtualEnvPath}/bin/activate &&`;
+    }
 
     const pythonScriptCommand = `python ${scriptPath}`;
 
