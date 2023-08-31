@@ -13,10 +13,10 @@ function runPythonScript(scriptPath, callback) {
     let activationScript = "";
     try {
         console.log('Platform:', process.platform);
-        activationScript = process.platform === 'win32' ? `.\\${virtualEnvPath}\\Scripts\\activate &&` : `source ./${virtualEnvPath}/bin/activate &&`;
+        activationScript = process.platform === 'win32' ? `.\\${virtualEnvPath}\\Scripts\\activate` : `source ./${virtualEnvPath}/bin/activate`;
     } catch (e) {
         console.log(e);
-        activationScript = `source ./${virtualEnvPath}/bin/activate &&`;
+        activationScript = `source ./${virtualEnvPath}/bin/activate`;
     }
 
     const pythonScriptCommand = `python ${scriptPath}`;
